@@ -10,12 +10,22 @@ export const gameState = {
 };
 
 async function getRandomWord() {
-  const response = await fetch(
-    `https://random-word-api.herokuapp.com/word?length=${config.wordLength}`,
-    // `https://random-words-api.kushcreates.com/api?length=${config.wordLength}&words=1`,
-  );
-  const data = await response.json();
-  return data[0].word;
+  let validWord = false;
+  let data;
+  const loadingText = document.getElementById("game-loading");
+  loadingText.classList.remove("hidden");
+  while (!validWord) {
+    const response = await fetch(
+      `https://random-word-api.herokuapp.com/word?length=${config.wordLength}`,
+      // `https://random-words-api.kushcreates.com/api?length=${config.wordLength}&words=1`,
+    );
+    data = await response.json();
+    validWord = await isValidWord(data[0]);
+    console.log("attempted word: " + data[0] + ". Is a word?: " + validWord);
+  }
+  // return data[0].word;
+  loadingText.classList.add("hidden");
+  return data[0];
 }
 
 export async function checkGuess(guess) {
@@ -24,6 +34,7 @@ export async function checkGuess(guess) {
   const targetLetters = gameState.targetWord.toLowerCase().split("");
   const guessLetters = guess.toLowerCase().split("");
 
+  // TODO: Make checks for misplaced more complex.
   return guessLetters.map((letter, index) => {
     if (letter === targetLetters[index]) {
       return "correct";
@@ -36,11 +47,6 @@ export async function checkGuess(guess) {
 }
 
 async function isValidWord(word) {
-  // const response = await fetch(
-  //   `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`,
-  // );
-  // return response.ok;
-
   try {
     const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`,

@@ -6,7 +6,7 @@
   --misplaced: #b59f3b;
   --incorrect: #3a3a3c;
   --correct-border: #395936;
-  --misplaced-color: #7d6e2a;
+  --misplaced-border: #7d6e2a;
   --incorrect-border: #2a2a2b;
 }
 
@@ -38,7 +38,6 @@ header {
 #game-grid {
   display: grid;
   gap: 8px;
-  /* grid-template-columns: repeat(5, 60px); */
   justify-content: center;
   margin-top: 2em;
 }
@@ -67,4 +66,12 @@ header {
 .incorrect {
   background: var(--incorrect);
   border: 2px solid var(--incorrect-border);
+}
+
+#game-loading {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
 }
