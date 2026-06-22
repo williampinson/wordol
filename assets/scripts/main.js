@@ -39,8 +39,15 @@ const handleKeyDown = (e) => {
 
 document.addEventListener("keydown", handleKeyDown);
 
+document.getElementById("button-settings").addEventListener("click", () => {
+  alert("sorry, no settings yet");
+});
+
 function addLetter(letter) {
-  if (gameState.currentPosition < config.wordLength) {
+  if (
+    gameState.currentPosition < config.wordLength &&
+    gameState.currentAttempt < config.maxAttempts
+  ) {
     const cell = document.getElementById(
       `cell-r${gameState.currentAttempt},c${gameState.currentPosition}`,
     );
@@ -59,9 +66,11 @@ function removeLetter() {
   }
 }
 
+const tileRevealDelay = 300;
+
 async function submitGuess() {
   if (gameState.currentPosition < config.wordLength) {
-    console.error("word incomplete");
+    alert("incomplete word");
     return;
   }
   const rowTiles = document.querySelectorAll(
@@ -84,6 +93,19 @@ async function submitGuess() {
   const isWon = results.every((result) => result === "correct");
   if (isWon) {
     lockInput();
+    setTimeout(() => {
+      alert("you win!");
+    }, config.wordLength * tileRevealDelay);
+    return;
+  }
+
+  const isLoss = gameState.currentAttempt >= config.maxAttempts - 1;
+  if (isLoss) {
+    lockInput();
+    setTimeout(() => {
+      alert("you lose! LOSER");
+    }, config.wordLength * tileRevealDelay);
+    return;
   }
 
   gameState.currentAttempt++;
@@ -92,7 +114,6 @@ async function submitGuess() {
 
 function revealAttemptResults(results) {
   const rowToReveal = gameState.currentAttempt;
-  const tileRevealDelay = 300;
   results.forEach((result, col) => {
     const cell = document.getElementById(`cell-r${rowToReveal},c${col}`);
     setTimeout(() => {
