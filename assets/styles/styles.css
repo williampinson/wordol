@@ -25,6 +25,10 @@ header {
   padding-bottom: 0.5em;
 }
 
+button {
+  touch-action: manipulation;
+}
+
 #button-settings {
   text-align: right;
   background-color: var(--background);
@@ -94,14 +98,14 @@ header {
   border-radius: 5px;
   border: none;
   font-weight: bold;
-  font-size: 16pt;
-  min-width: 2.75rem;
-  min-height: 3.5rem;
+  font-size: 14pt;
+  min-width: 2.3rem;
+  min-height: 3.1rem;
   color: var(--text-color);
 }
 
 .big-key {
-  width: 4.35rem;
+  width: 3.8rem;
   font-weight: normal;
 }
 
