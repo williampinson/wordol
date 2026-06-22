@@ -84,7 +84,7 @@ async function submitGuess() {
 
   const results = await checkGuess(userGuess);
   if (!results) {
-    console.error("not a word");
+    alert("not a word");
     return;
   }
 
@@ -103,7 +103,7 @@ async function submitGuess() {
   if (isLoss) {
     lockInput();
     setTimeout(() => {
-      alert("you lose! LOSER");
+      alert(`you lose! LOSER. The word was ${gameState.targetWord}`);
     }, config.wordLength * tileRevealDelay);
     return;
   }
