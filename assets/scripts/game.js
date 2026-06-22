@@ -16,16 +16,21 @@ async function getRandomWord() {
   loadingText.classList.remove("hidden");
   while (!validWord) {
     const response = await fetch(
-      `https://random-word-api.herokuapp.com/word?length=${config.wordLength}`,
+      // `https://random-word-api.herokuapp.com/word?length=${config.wordLength}`, // slower
       // `https://random-words-api.kushcreates.com/api?length=${config.wordLength}&words=1`,
+      `https://random-words-api.kushcreates.com/api?language=en&length=${config.wordLength}&type=lowercase&words=1`,
     );
     data = await response.json();
-    validWord = await isValidWord(data[0]);
-    console.log("attempted word: " + data[0] + ". Is a word?: " + validWord);
+    // validWord = await isValidWord(data[0]);
+    // console.log("attempted word: " + data[0] + ". Is a word?: " + validWord);
+    validWord = await isValidWord(data[0].word);
+    console.log(
+      "attempted word: " + data[0].word + ". Is a word?: " + validWord,
+    );
   }
-  // return data[0].word;
   loadingText.classList.add("hidden");
-  return data[0];
+  return data[0].word;
+  // return data[0];
 }
 
 export async function checkGuess(guess) {
