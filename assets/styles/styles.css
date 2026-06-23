@@ -41,6 +41,7 @@ button {
 }
 
 #game-grid {
+  margin: 0 auto;
   display: grid;
   gap: 8px;
   justify-content: center;
@@ -118,4 +119,16 @@ button {
 .keyboard-row {
   display: flex;
   gap: 6px;
+}
+
+.correct-keyboard {
+  background-color: var(--correct);
+}
+
+.misplaced-keyboard {
+  background-color: var(--misplaced);
+}
+
+.incorrect-keyboard {
+  background-color: var(--incorrect);
 }

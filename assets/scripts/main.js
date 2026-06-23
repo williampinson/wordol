@@ -156,8 +156,27 @@ function revealAttemptResults(results) {
     const cell = document.getElementById(`cell-r${rowToReveal},c${col}`);
     setTimeout(() => {
       cell.classList.add(result);
+      changeLetterColors(cell, result);
     }, col * tileRevealDelay);
   });
+}
+
+function changeLetterColors(cell, resultClass) {
+  const letter = cell.textContent.toLowerCase();
+  const key = document.getElementById(`key-${letter}`);
+  if (resultClass === "correct" || key.classList.contains("correct-keyboard")) {
+    key.classList.remove("incorrect-keyboard");
+    key.classList.remove("misplaced-keyboard");
+    key.classList.add("correct-keyboard");
+  } else if (
+    resultClass === "misplaced" ||
+    key.classList.contains("correct-keyboard")
+  ) {
+    key.classList.remove("incorrect-keyboard");
+    key.classList.add("misplaced-keyboard");
+  } else {
+    key.classList.add("incorrect-keyboard");
+  }
 }
 
 function lockInput() {
