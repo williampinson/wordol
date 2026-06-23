@@ -2,6 +2,21 @@ import { config, gameState, checkGuess } from "./game.js";
 console.log(gameState.targetWord);
 
 const grid = document.getElementById("game-grid");
+const winMessages = [
+  "yay! you win!",
+  "you win!",
+  "you win 👍",
+  "winner 👍",
+  "👍",
+  "you win",
+  "woohoo you win",
+  "you win! However, in real life, there are no winners.",
+  "winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner winner ",
+];
+
+function getWinMessage() {
+  return winMessages[Math.floor(Math.random() * winMessages.length)];
+}
 
 function addTileToGrid(row, col) {
   const tile = document.createElement("div");
@@ -132,7 +147,7 @@ async function submitGuess() {
   if (isWon) {
     lockInput();
     setTimeout(() => {
-      alert("you win!");
+      alert(getWinMessage());
     }, config.wordLength * tileRevealDelay);
     return;
   }
